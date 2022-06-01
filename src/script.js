@@ -37,7 +37,7 @@ var moonMaterial = new THREE.MeshBasicMaterial({
   map: moonTexture
 });
 var moon = new THREE.Mesh(moonGeometry, moonMaterial);
-//moon.position.set(1,1,0);
+moon.position.set(2,1,0);
 
 scene.add(moon);
 
@@ -47,7 +47,7 @@ const earthMaterial = new THREE.MeshBasicMaterial({
 });
  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
  scene.add(earth);
-
+ earth.position.set(-1,3,0);
     //Sizes
     const sizes={
         width:800,
@@ -76,21 +76,42 @@ controls.update()
 renderer.setSize(sizes.width,sizes.height)
 
 
-const  sa=new Attractor(moon.position,earth.position,50000000,4000)
+//let sa=new Attractor(earth.position,moon.position)
 let time=Date.now()
 const clock=new THREE.Clock
 
+
+
 const tick=()=>
  {
-
+   
   const currenttime=Date.now()
   const delltatime=currenttime-time
   time=currenttime
   const elapsedTime=clock.getElapsedTime()
-      // sa.update(elapsedTime)
-      sa.update(elapsedTime)
+
+  let G = 6 ;
+  let distance=12;
+  //Math.sqrt(((earth.position.x-moon.position.x)*(earth.position.x-moon.position.x))+((earth.position.y-moon.position.y)*(earth.position.y-moon.position.y)));
+  let force= G* ((5*4)/(distance*distance));
+  let theta=Math.atan((earth.position.y-moon.position.y)/(earth.position.x-moon.position.x));
+ 
+  let fx=force*Math.cos(theta);
+  let fy=force*Math.sin(theta);
+
+
+let acc=new THREE.Vector2(fx/5,fy/5);
+console.log(theta);
+
+  
+  let velocity=new THREE.Vector2(acc.x*elapsedTime/120,acc.y*elapsedTime/120);
+  moon.position.x-=velocity.x*elapsedTime/120;
+  moon.position.y-=velocity.y*elapsedTime/120;
+
+       //sa.update(1)
+    //  sa.update(elapsedTime)
 renderer.render(scene,camera)
 window.requestAnimationFrame(tick)
 
 }
-tick()
+tick();
