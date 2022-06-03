@@ -5,6 +5,8 @@ import { WireframeGeometry } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import './style.css'
 import { Attractor } from './Attractor'
+import { Satellite } from './pysical/satellite'
+import { Vector } from './pysical/vector'
 
 const gui =new dat.GUI()
 
@@ -47,7 +49,7 @@ const earthMaterial = new THREE.MeshBasicMaterial({
 });
  const earth = new THREE.Mesh(earthGeometry, earthMaterial);
  scene.add(earth);
- earth.position.set(-1,3,0);
+ earth.position.set(-1,0,0);
     //Sizes
     const sizes={
         width:800,
@@ -79,34 +81,42 @@ renderer.setSize(sizes.width,sizes.height)
 //let sa=new Attractor(earth.position,moon.position)
 let time=Date.now()
 const clock=new THREE.Clock
-
+let velocity=new THREE.Vector2(2,0)
 
 
 const tick=()=>
  {
-   
+
+
+  earth.rotation.x+=Math.sin(0.5);
+  
+  let fx=0;
+  let fy=0;
+  let G =1 ;
+  let distance=  
+  Math.sqrt(((earth.position.x-moon.position.x)*(earth.position.x-moon.position.x))+((earth.position.y-moon.position.y)*(earth.position.y-moon.position.y)));
+  let force= G* ((5*1)/(distance*distance));
+  //let theta=Math.atan((earth.position.y-moon.position.y)/(earth.position.x-moon.position.x));
+ 
+  let theta = ((Math.atan((moon.position.y - earth.position.y)/(moon.position.x-earth.position.x))) );
+
+  fx=force*Math.cos(theta);
+  fy=force*Math.sin(theta);
+
+
+let acc=new THREE.Vector2(fx,fy);
+console.log(Math.cos(theta));
+
+  
   const currenttime=Date.now()
   const delltatime=currenttime-time
   time=currenttime
   const elapsedTime=clock.getElapsedTime()
-
-  let G = 6 ;
-  let distance=12;
-  //Math.sqrt(((earth.position.x-moon.position.x)*(earth.position.x-moon.position.x))+((earth.position.y-moon.position.y)*(earth.position.y-moon.position.y)));
-  let force= G* ((5*4)/(distance*distance));
-  let theta=Math.atan((earth.position.y-moon.position.y)/(earth.position.x-moon.position.x));
- 
-  let fx=force*Math.cos(theta);
-  let fy=force*Math.sin(theta);
-
-
-let acc=new THREE.Vector2(fx/5,fy/5);
-console.log(theta);
-
+   velocity.x=acc.x*elapsedTime/120;
+   velocity.y=acc.y*elapsedTime/120;
+  moon.position.x=velocity.x*delltatime;
+  moon.position.y+=velocity.y*delltatime;
   
-  let velocity=new THREE.Vector2(acc.x*elapsedTime/120,acc.y*elapsedTime/120);
-  moon.position.x-=velocity.x*elapsedTime/120;
-  moon.position.y-=velocity.y*elapsedTime/120;
 
        //sa.update(1)
     //  sa.update(elapsedTime)
