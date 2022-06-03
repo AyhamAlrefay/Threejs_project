@@ -87,6 +87,9 @@ let velocity=new THREE.Vector2(2,0)
 const tick=()=>
  {
 
+//why you use to way to calculate the time
+
+
 
   earth.rotation.x+=Math.sin(0.5);
   
@@ -108,6 +111,7 @@ let acc=new THREE.Vector2(fx,fy);
 console.log(Math.cos(theta));
 
   
+
   const currenttime=Date.now()
   const delltatime=currenttime-time
   time=currenttime
