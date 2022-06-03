@@ -82,7 +82,7 @@ const clock=new THREE.Clock
 
 const tick=()=>
  {
-
+//why you use to way to calculate the time
   const currenttime=Date.now()
   const delltatime=currenttime-time
   time=currenttime
