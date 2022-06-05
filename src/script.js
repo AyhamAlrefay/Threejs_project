@@ -102,7 +102,12 @@ let velocity=new THREE.Vector2(2,0)
 const tick=()=>
  {
 
-  
+//why you use to way to calculate the time
+
+
+
+  earth.rotation.x+=Math.sin(0.5);
+
   let fx=0;
   let fy=0;
   //gravity
@@ -125,6 +130,7 @@ const tick=()=>
 let acc=new THREE.Vector2(fx,fy);
 
 //cluclat time  
+
   const currenttime=Date.now()
   const delltatime=currenttime-time
   time=currenttime
