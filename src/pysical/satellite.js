@@ -1,4 +1,4 @@
-import vector from "./vector";
+import vector from "./vectors";
 import * as THREE from "three";
 import { Vector3 } from "three";
 
@@ -26,7 +26,7 @@ class Satellite {
       this.resistanse_coeff = resistanse_coeff;
       this.friction_coeff = friction_coeff;
       this.raduis = raduis; //m
-      this.rho = 0;
+
       if (this.type == 1) {
         this.rho = 500; // kg/m^3  wood
         this.resistanse_coeff = 0.4603;

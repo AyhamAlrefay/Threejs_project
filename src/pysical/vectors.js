@@ -1,6 +1,6 @@
 import { normalize } from "gsap/gsap-core";
 
-var vector = {
+export var Vectors = {
   _x: 0,
   _y: 0,
   _z: 0,
@@ -87,7 +87,7 @@ var vector = {
   },
 
   add: function (v2) {
-    return vector.create(
+    return Vectors.create(
       this._x + v2.getX(),
       this._y + v2.getY(),
       this._z + v2.getZ()
@@ -103,11 +103,11 @@ var vector = {
   // },
 
   multiply: function (val) {
-    return vector.create(this._x * val, this._y * val, this._z * val);
+    return Vectors.create(this._x * val, this._y * val, this._z * val);
   },
 
   divide: function (vec) {
-    return vector.create(
+    return Vectors.create(
       this._x / vec.getX(),
       this._y / vec.getY(),
       this._z / vec.getZ()
@@ -142,7 +142,7 @@ var vector = {
   },
 
   normalize: function () {
-    return vector.create(
+    return Vectors.create(
       this._x / this.getLength() || 0,
       this._y / this.getLength() || 0,
       this._z / this.getLength() || 0
@@ -155,7 +155,7 @@ var vector = {
   },
 
   cross: function (vec) {
-    return vector.create(
+    return Vectors.create(
       this._z * vec.getY() - this._y * vec.getZ(),
       this._z * vec.getX() - this._x * vec.getZ(),
       this._y * vec.getX() - this._x * vec.getY()
@@ -163,7 +163,7 @@ var vector = {
   },
 
   clone: function () {
-    return vector.create(this._x, this._y, this._z);
+    return Vectors.create(this._x, this._y, this._z);
   },
 };
-export default vector;
+
